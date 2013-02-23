@@ -3,56 +3,80 @@
 	<title>Android HTML5 & HLS Compatibility</title>
 	<style>
 	body {
-		background: #eee;
+		background: #bbb;
 		color: #333;
 		font-family: arial, sans-serif;
 		font-size: 100%;
 	}
-	#chart {
-		border: solid 1px #999;
+	a { color: #425957;}
+	a:hover { text-decoration: none; }
+	a:active { color: #444; }
+	#container { background: #eee; min-width: 660px; max-width:980px; padding: 10px; margin: 0 auto;}
+	.chart {
+		border: solid 1px #555;
 		border-collapse: collapse;
 		min-width: 640px;
+		margin: 10px 0;
 	}
-	#chart td { padding: 4px; border-bottom: solid 1px #555; border-right: solid 1px #555;}
-	#chart th { background: #ccc; padding: 4px; border-bottom: solid 2px #555;}
-	#chart .header {
+	.chart td { text-align:center; padding: 4px; border-bottom: solid 1px #555; border-right: solid 1px #555;}
+	.chart th { background: #ccc; padding: 4px; border-bottom: solid 2px #555;}
+	.chart .header {
 		text-align: center;
 		background: #ddd;
 	}
-	#chart td.green { background: #b2e87d;}
-	#chart td.split {
-		border-right: solid 1px #ccc;
-	}
+	.chart td.green { background: #81AC8B;}
+	.chart td.yellow { background: #F2E5A2;}
+	.chart td.red { background: #F89883;}
+
+	.notes { margin: 0; padding: 10px 0; list-style: none; font-size: 80%;}
+	.notes li { margin: 0; padding: 2px 0;}
 	</style>
 </head>
 <body>
 
+<div id="container">
 
 <h1>Android HTML5 & HLS Compatibility</h1>
 
 <p>Android HTML5/HLS Video Compatibility Test Results for Live and VOD content, as tested with 4.1.x</p>
 
+<table class="chart">
+<tr><td class="green">No problems</td><td class="yellow">Plays, but with issue</td><td class="red">Does not play/serious issue</td></tr>
+</table>
 
-<table id="chart">
+
+<table class="chart">
 <tr>
 	<th>Video Type</th>
-	<th colspan="2">Chrome</th>
-	<th colspan="2">Firefox</th>
-	<th colspan="2">Dolphin</th>
-	<th colspan="2">Stock</th>
+	<th>Chrome</th>
+	<th>Firefox</th>
+	<th>Dolphin</th>
+	<th>Stock</th>
 </tr>
 
-<tr><td class="header">MP4 Progressive</td><td class="split">&nbsp;</td><td>&nbsp;</td><td class="split">&nbsp;</td><td>&nbsp;</td><td class="split">&nbsp;</td><td>&nbsp;</td><td class="split">&nbsp;</td><td>&nbsp;</td></tr>
+<tr><td class="header">MP4 Progressive</td><td class="green">OK</td><td class="green">OK</td><td class="green">OK</td><td class="green">OK</td></tr>
 
-<tr><td class="header">HLS VOD</td><td class="split">&nbsp;</td><td>&nbsp;</td><td class="split">&nbsp;</td><td>&nbsp;</td><td class="split">&nbsp;</td><td>&nbsp;</td><td class="split">&nbsp;</td><td>&nbsp;</td></tr>
-<tr><td class="header">HLS LIVE</td><td class="split">&nbsp;</td><td>&nbsp;</td><td class="split">&nbsp;</td><td>&nbsp;</td><td class="split">&nbsp;</td><td>&nbsp;</td><td class="split">&nbsp;</td><td>&nbsp;</td></tr>
+<tr><td class="header">HLS VOD</td><td>&nbsp;</td><td>&nbsp;</td><td class="yellow">&nbsp;</td><td>&nbsp;</td></tr>
+<tr><td class="header">HLS LIVE</td><td class="yellow">2</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
 
-<tr><td class="header">HLS DVR VOD	</td><td class="split">&nbsp;</td><td>&nbsp;</td><td class="split">&nbsp;</td><td>&nbsp;</td><td class="split">&nbsp;</td><td>&nbsp;</td><td class="split">&nbsp;</td><td>&nbsp;</td></tr>
-<tr><td class="header">HLS DVR LIVE</td><td class="split">&nbsp;</td><td>&nbsp;</td><td class="split">&nbsp;</td><td>&nbsp;</td><td class="split">&nbsp;</td><td>&nbsp;</td><td class="split">&nbsp;</td><td>&nbsp;</td></tr>
+<tr><td class="header">HLS VOD w/DVR</td><td>&nbsp;</td><td>&nbsp;</td><td class="red">&nbsp;</td><td>&nbsp;</td></tr>
+<tr><td class="header">HLS LIVE w/DVR</td><td class="red">1</td><td class="red">1</td><td class="red">1</td><td class="red">1</td></tr>
 
 </table>
 
-<a href="http://www.github.com/adevendorf/android-html5-hls-compatibility">View on GitHub</a>
+<ul class="notes">
+<li>1. Player does not jump to the live marker, starts from the beginning.</li>
+<li>2. Full screen error. "Cannot play video file"</li>
+<li>3. Cannot control time line</li>
+<li>4. Cannot leave fullscreen without crash or error</li>
+<li>5. Video does not load</li>
+</ul>
+
+
+
+<p><a href="http://www.github.com/adevendorf/android-html5-hls-compatibility">View on GitHub</a></p>
+
+</div>
 
 </body>
 </html>
