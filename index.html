@@ -20,17 +20,18 @@
 	}
 	.chart td { text-align:center; padding: 4px; border-bottom: solid 1px #555; border-right: solid 1px #555;}
 	.chart th { background: #ccc; padding: 4px; border-bottom: solid 2px #555;}
+	.chart th.result { width: 100px; }
 	.chart .header {
 		text-align: center;
 		background: #ddd;
 	}
-	.chart td.green { background: #81AC8B;}
-	.chart td.yellow { background: #F2E5A2;}
-	.chart td.red { background: #F89883;}
-	.chart td.dealbreaker { background: #D96666;}
+	.g { background: #81AC8B;}
+	.y { background: #F2E5A2;}
+	.r { background: #F89883;}
+	.d { background: #D96666;}
 
-	.notes { margin: 0; padding: 10px 0; list-style: none; font-size: 80%;}
-	.notes li { margin: 0; padding: 2px 0;}
+	.notes { margin: 10px 0; padding: 0px; list-style: none; font-size: 80%; border-top: solid 1px #555;}
+	.notes li { margin: 0; padding: 4px; border-bottom: solid 1px #555;}
 	</style>
 </head>
 <body>
@@ -39,41 +40,214 @@
 
 <h1>Android HTML5 & HLS Compatibility</h1>
 
-<p>Android HTML5/HLS Video Compatibility Test Results for Live and VOD content, as tested with 4.1.x</p>
+<p>Android HTML5/HLS Video Compatibility Test Results for Live and VOD h.264 content</p>
+
+<strong>Sources of Testing:</strong>
+<ul>
+<li>Adobe Flash Media Server (HLS VOD)</li>
+<li>Amazon AWS FMLE + FMS + CloudFront (HLS LIVE)</li>
+<li>Akamai HD (HLS VOD w/DVR, HLS LIVE w/DVR)</li>
+<li>YouTube Live</li>
+<li>USTREAM Live</li>
+</ul>
 
 <table class="chart">
-<tr><td class="green">Should Work</td><td class="yellow">Plays, but with issue</td><td class="red">Major Issue</td><td class="dealbreaker">Unworkable</td></tr>
+<tr><td class="g">Should Work</td><td class="y">Plays, with Issue</td><td class="r">Plays, with Major Issue</td><td class="d">Won't Play</td></tr>
 </table>
+
+<p>Major Issue is something that may prevent you from watching the video under some situation</p>
 
 
 <table class="chart">
 <tr>
 	<th>Video Type</th>
-	<th>Chrome</th>
-	<th>Firefox</th>
-	<th>Dolphin</th>
-	<th>Stock</th>
+	<th>Chrome (18.x)</th>
+	<th>Firefox (18)</th>
+	<th>Dolphin (9.2)</th>
+	<th>Stock (4.1.1)</th>
 </tr>
 
-<tr><td class="header">MP4 Progressive Download</td><td class="green">--</td><td class="green">--</td><td class="green">--</td><td class="green">--</td></tr>
+<tr>
+	<td class="header">MP4 Progressive Download</td>
+	<td class="g">-</td><!-- Chrome -->
+	<td class="g">3, 4, 10</td><!-- Firefox -->
+	<td class="g">9</td><!-- Dolphin -->
+	<td class="g">-</td><!-- Stock -->
+</tr>
 
-<tr><td class="header">HLS VOD</td><td class="green">--</td><td>&nbsp;</td><td class="yellow">&nbsp;</td><td>&nbsp;</td></tr>
-<tr><td class="header">HLS LIVE</td><td class="yellow">2</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+<tr>
+	<td class="header">HLS VOD</td>
+	<td class="r">2, 3, 4, 7</td><!-- Chrome -->
+	<td class="d">5, 6</td><!-- Firefox -->
+	<td class="y">3, 4, 8</td><!-- Dolphin -->
+	<td class="y">3, 4, 8, 9</td><!-- Stock -->
+</tr>
+<tr>
+	<td class="header">HLS LIVE</td>
+	<td class="r">2</td><!-- Chrome -->
+	<td class="d">5, 6</td><!-- Firefox -->
+	<td class="g">-</td><!-- Dolphin -->
+	<td class="y">9</td><!-- Stock -->
+</tr>
 
-<tr><td class="header">HLS VOD w/DVR</td><td>&nbsp;</td><td>&nbsp;</td><td class="red">3</td><td>&nbsp;</td></tr>
-<tr><td class="header">HLS LIVE w/DVR</td><td class="dealbreaker">1</td><td class="dealbreaker">6</td><td class="dealbreaker">1</td><td class="dealbreaker">1</td></tr>
-
+<tr>
+	<td class="header">HLS VOD w/DVR</td>
+	<td class="r">2, 3, 4, 7</td><!-- Chrome -->
+	<td class="d">5, 6</td><!-- Firefox -->
+	<td class="y">3, 8</td><!-- Dolphin -->
+	<td class="y">3, 8, 9</td><!-- Stock -->
+</tr>
+<tr>
+	<td class="header">HLS LIVE w/DVR</td>
+	<td class="r">1</td><!-- Chrome -->
+	<td class="d">5, 6</td><!-- Firefox -->
+	<td class="r">1</td><!-- Dolphin -->
+	<td class="r">1</td><!-- Stock -->
+</tr>
 </table>
 
 <ul class="notes">
-<li>1. Player does not jump to the live marker, starts from the beginning.</li>
-<li>2. When entering full screen:  "Error: Cannot play video file"</li>
-<li>3. Cannot control video timeline with an issue</li>
-<li>4. Cannot leave fullscreen without crash or error</li>
-<li>5. Video does not load</li>
-<li>6. Not supported in browser</li>
+<li class="r">1. Player does not jump to the live marker, starts from the beginning.</li>
+<li class="r">2. When entering full screen:  "Error: Sorry, this video cannot be played." Audio still plays in the background.</li>
+<li class="y">3. Cannot scrub timeline without issue, on page</li>
+<li class="y">4. Cannot scrub timeline without issue, fullscreen</li>
+<li class="d">5. Video does not load</li>
+<li class="d">6. Not supported in browser</li>
+<li class="r">7. Continues to play when player loses all control</li>
+<li class="y">8. Loses timeline spot at times (ex: entering fullscreen, exiting full screen, trying to scrub, etc)</li>
+<li class="y">9. Takes several attempts of hitting back to leave full screen.</li>
+<li class="y">10. Can't go full screen</li>
 </ul>
 
+<h5>Chrome<h5/>
+
+<table class="chart">
+<tr>
+	<th>Video Type</th>
+	<th class="result">18.0.1025469</th>
+</tr>
+<tr>
+	<td class="header">MP4 Progressive Download</td>
+	<td class="g">-</td><!-- 18.0.1025469 -->
+</tr>
+<tr>
+	<td class="header">HLS VOD</td>
+	<td class="r">2, 3, 4, 7</td><!-- 18.0.1025469 -->
+</tr>
+<tr>
+	<td class="header">HLS LIVE</td>
+	<td class="r">2</td><!-- 18.0.1025469 -->
+</tr>
+
+<tr>
+	<td class="header">HLS VOD w/DVR</td>
+	<td class="r">2, 3, 4, 7</td><!-- 18.0.1025469 -->
+</tr>
+<tr>
+	<td class="header">HLS LIVE w/DVR</td>
+	<td class="r">1</td><!-- 18.0.1025469 -->
+</tr>
+</table>
+
+
+
+
+<h5>Firefox<h5/>
+
+<table class="chart">
+<tr>
+	<th>Video Type</th>
+	<th class="result">18.0</th>
+</tr>
+<tr>
+	<td class="header">MP4 Progressive Download</td>
+	<td class="g">3, 4, 10</td><!-- 18 -->
+</tr>
+<tr>
+	<td class="header">HLS VOD</td>
+	<td class="d">5, 6</td><!-- 18 -->
+</tr>
+<tr>
+	<td class="header">HLS LIVE</td>
+	<td class="d">5, 6</td><!-- 18 -->
+</tr>
+<tr>
+	<td class="header">HLS VOD w/DVR</td>
+	<td class="d">5, 6</td><!-- 18 -->
+</tr>
+<tr>
+	<td class="header">HLS LIVE w/DVR</td>
+	<td class="d">5, 6</td><!-- 18 -->
+</tr>
+</table>
+
+
+
+
+<h5>Dolphin<h5/>
+
+<table class="chart">
+<tr>
+	<th>Video Type</th>
+	<th class="result">9.2.0</th>
+</tr>
+<tr>
+	<td class="header">MP4 Progressive Download</td>
+	<td class="g">9</td><!-- 9.2.0 -->
+</tr>
+<tr>
+	<td class="header">HLS VOD</td>
+	<td class="y">3, 4, 8</td><!-- 9.2.0 -->
+</tr>
+<tr>
+	<td class="header">HLS LIVE</td>
+	<td class="g">-</td><!-- 9.2.0 -->
+</tr>
+
+<tr>
+	<td class="header">HLS VOD w/DVR</td>
+	<td class="y">3, 8</td><!-- 9.2.0 -->
+</tr>
+<tr>
+	<td class="header">HLS LIVE w/DVR</td>
+	<td class="r">1</td><!-- 9.2.0 -->
+</tr>
+</table>
+
+
+
+
+
+<h5>Stock "Internet" Browser<h5/>
+
+<table class="chart">
+<tr>
+	<th>Video Type</th>	
+	<th class="result">4.1.1</th>
+</tr>
+<tr>
+	<td class="header">MP4 Progressive Download</td>
+	<td class="g">-</td><!-- 4.1.1. -->
+</tr>
+
+<tr>
+	<td class="header">HLS VOD</td>
+	<td class="y">3, 4, 8, 9</td><!-- 4.1.1. -->
+</tr>
+<tr>
+	<td class="header">HLS LIVE</td>
+	<td class="y">9</td><!-- 4.1.1. -->
+</tr>
+
+<tr>
+	<td class="header">HLS VOD w/DVR</td>
+	<td class="y">3, 8, 9</td><!-- 4.1.1. -->
+</tr>
+<tr>
+	<td class="header">HLS LIVE w/DVR</td>
+	<td class="r">1</td><!-- 4.1.1. -->
+</tr>
+</table>
 
 
 <p><a href="http://www.github.com/adevendorf/android-html5-hls-compatibility">View on GitHub</a></p>
